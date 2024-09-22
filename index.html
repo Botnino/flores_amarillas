@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regalo con Flores Amarillas</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('img/fondo2.jpg'); /* Añade esta línea */
+            background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+
+        /* Corazón en el centro */
+        .heart-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .heart {
+            width: 350px;
+            height: 350px;
+            background: url('img/corazon.png') no-repeat center center;
+            background-size: contain;
+            animation: beat 1s infinite;
+        }
+
+        .heart-text {
+            margin-top: 10px;
+            font-size: 45px;
+            color: #991b1b;
+        }
+
+        /* Animación del corazón */
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Contenedor del mensaje */
+        .container {
+            text-align: center;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            display: none; /* Oculto hasta que se haga clic */
+        }
+
+        h1 {
+            margin: 10px 0;
+            color: #333;
+            font-size: 28px;
+            opacity: 0;
+            animation: fadeInText 3s forwards;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .yellow-text {
+            color: #FFAA00;
+            font-size: 72px;
+            font-weight: bold;
+            animation: glowText 3s infinite alternate;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .signature {
+            font-size: 48px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInText 4s forwards;
+            color: #FF69B4;
+        }
+
+        /* Estilo de las flores */
+        .flower {
+            position: absolute;
+            background-image: url('img/flor_amarillo.png');
+            background-size: cover;
+            opacity: 0.9;
+            animation: floatFlower 6s ease-in-out infinite alternate;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+            transition: transform 0.3s ease-in-out;
+            z-index: 2; /* Las flores están detrás del texto */
+        }
+
+        .flower:hover {
+            transform: translateX(50px) translateY(50px); /* Repulsión al pasar el mouse */
+        }
+
+        /* Imágenes de Deysi en las esquinas */
+        .corner-image {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1; /* Imágenes detrás de las flores */
+        }
+
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
+
+        /* Animaciones de las flores */
+        @keyframes rotateFlower {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fallFlower {
+            0% { transform: translateY(-20px); }
+            100% { transform: translateY(30px); }
+        }
+
+        @keyframes floatFlower {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        /* Animación del texto */
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Efecto de brillo en el texto */
+        @keyframes glowText {
+            from { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500, 0 0 30px #FF8C00; }
+            to { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFA500, 0 0 40px #FF8C00; }
+        }
+
+        /* Estilo del reproductor */
+        .audio-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        /* Efecto de gotas de lluvia */
+        .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: fall 5s infinite linear;
+            z-index: 0; /* Detrás de todo */
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 16px;
+            }
+
+            .yellow-text {
+                font-size: 48px;
+            }
+
+            .signature {
+                font-size: 24px;
+            }
+
+            .corner-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .heart {
+                width: 300px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Corazón en el centro -->
+    <div class="heart-container" onclick="showMessage()">
+        <div class="heart"></div>
+        <div class="heart-text">Tócame</div>
+    </div>
+
+    <!-- Contenedor del mensaje (inicialmente oculto) -->
+    <div class="container" id="message">
+        <h1>Te regalo con amor...</h1>
+        <h1>Estas flores</h1>
+        <div class="signature">Deysi</div>
+    </div>
+
+    <!-- Imágenes en las esquinas -->
+    <div class="corner-image top-left" style="background-image: url('img/deysi.jpg');"></div>
+    <div class="corner-image top-right" style="background-image: url('img/deysi4.jpg');"></div>
+    <div class="corner-image bottom-left" style="background-image: url('img/deysi2.jpg');"></div>
+    <div class="corner-image bottom-right" style="background-image: url('img/deysi3.jpg');"></div>
+
+    <!-- Flores -->
+    <script>
+        const totalFlowers = 60; // Incrementamos el número de flores
+        for (let i = 0; i < totalFlowers; i++) {
+            let flower = document.createElement('div');
+            flower.classList.add('flower');
+
+            // Tamaño aleatorio para las flores
+            let size = Math.random() * (150 - 50) + 50; // Tamaño entre 50px y 150px
+            flower.style.width = `${size}px`;
+            flower.style.height = `${size}px`;
+
+            // Posiciones aleatorias en la pantalla
+            flower.style.top = `${Math.random() * 100}vh`;
+            flower.style.left = `${Math.random() * 100}vw`;
+
+            // Animaciones aleatorias (rotar o caer)
+            let animationType = Math.random() > 0.5 ? 'rotateFlower' : 'fallFlower';
+            let animationDuration = Math.random() * (8 - 4) + 4; // Duración entre 4 y 8 segundos
+            flower.style.animation = `${animationType} ${animationDuration}s linear infinite`;
+
+            document.body.appendChild(flower);
+        }
+
+        // Agregar gotas de lluvia
+        const totalRaindrops = 100;
+        for (let i = 0; i < totalRaindrops; i++) {
+            let raindrop = document.createElement('div');
+            raindrop.classList.add('raindrop');
+
+            // Posiciones aleatorias para las gotas
+            raindrop.style.left = `${Math.random() * 100}vw`;
+            raindrop.style.animationDuration = `${Math.random() * (5 - 2) + 2}s`; // Duración aleatoria entre 2s y 5s
+
+            document.body.appendChild(raindrop);
+        }
+
+        // Mostrar mensaje al hacer clic en el corazón
+        function showMessage() {
+            document.getElementById('message').style.display = 'block';
+        }
+    </script>
+
+    <!-- Música de fondo centrada -->
+    <div class="audio-container">
+        <audio controls autoplay loop>
+            <source src="musica/FloresAmarillas.mp3" type="audio/mpeg">
+            Tu navegador no soporta la reproducción de música.
+        </audio>
+    </div>
+
+</body>
+</html>
